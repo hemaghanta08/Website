@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Update Profile Pic</title>
+
+  <style>
+    /* CSS styles for page */
+  </style>
+
+</head>
+
+<body>
+
+  <h1>Update Profile Picture</h1>
+
+  <img id="profileImage" src="{{ user.profile_pic.url }}" alt="Profile Pic">
+
+  <form id="updateForm" method="post" enctype="multipart/form-data">
+
+    {% csrf_token %}
+
+    <input type="file" id="profilePictureInput" name="profile_pic" accept="image/*">
+
+    <button type="submit">Update</button>
+
+  </form>
+
+  <script>
+
+    // Get DOM elements
+    const profileImage = document.getElementById('profileImage');
+    const fileInput = document.getElementById('profilePictureInput');
+
+    // Update preview on change
+    fileInput.addEventListener('change', function() {
+
+      // Get uploaded file object
+      const file = this.files[0];
+
+      // Load file with file reader  
+      const reader = new FileReader();
+
+      reader.onload = function() {
+        profileImage.src = reader.result;
+      }
+
+      reader.readAsDataURL(file);
+
+    });
+
+  </script>
+
+</body>
+
+</html>
